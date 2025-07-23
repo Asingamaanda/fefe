@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ngoma Curriculum - Interactive Learning Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .education-hero {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+        
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+        
+        .course-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .course-image {
+            height: 200px;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+        
+        .course-info {
+            padding: 1.5rem;
+        }
+        
+        .course-level {
+            background: #3498db;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        
+        .course-duration {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .enroll-btn {
+            width: 100%;
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+        
+        .enroll-btn:hover {
+            background: #2980b9;
+        }
+        
+        .learning-path {
+            background: #f8f9fa;
+            padding: 3rem 0;
+        }
+        
+        .path-step {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        
+        .path-step::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 20px solid white;
+        }
+        
+        .path-step:last-child::after {
+            display: none;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .classroom-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #3498db, #2ecc71);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Ngoma</h2>
+                <span>Curriculum</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#courses">Courses</a></li>
+                <li><a href="#classroom">Virtual Classroom</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="education-hero">
+        <div class="container">
+            <h1>Ngoma Curriculum Platform</h1>
+            <p>Comprehensive curriculum-based learning that adapts to every student's needs. Experience interactive education in our virtual classrooms.</p>
+            <div class="hero-buttons">
+                <a href="#courses" class="btn primary">Browse Courses</a>
+                <a href="#classroom" class="btn secondary">Join Classroom</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning Path -->
+    <section class="learning-path">
+        <div class="container">
+            <div class="section-header">
+                <h2>Your Learning Journey</h2>
+                <p>Follow our structured path to academic excellence</p>
+            </div>
+            <div class="path-step">
+                <div class="step-number">1</div>
+                <h3>Assessment & Placement</h3>
+                <p>Take our comprehensive assessment to determine your current level and learning needs.</p>
+            </div>
+            <div class="path-step">
+                <div class="step-number">2</div>
+                <h3>Personalized Learning Plan</h3>
+                <p>Receive a customized curriculum tailored to your goals and learning style.</p>
+            </div>
+            <div class="path-step">
+                <div class="step-number">3</div>
+                <h3>Interactive Lessons</h3>
+                <p>Engage with dynamic content, videos, quizzes, and hands-on activities.</p>
+            </div>
+            <div class="path-step">
+                <div class="step-number">4</div>
+                <h3>Virtual Classroom</h3>
+                <p>Join live sessions with instructors and collaborate with fellow students.</p>
+            </div>
+            <div class="path-step">
+                <div class="step-number">5</div>
+                <h3>Progress Tracking</h3>
+                <p>Monitor your progress with detailed analytics and feedback.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section id="courses" class="container">
+        <div class="section-header">
+            <h2>Our Courses</h2>
+            <p>Curriculum-based learning for all grade levels</p>
+        </div>
+        <div class="course-grid">
+            <div class="course-card">
+                <div class="course-image">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <div class="course-info">
+                    <span class="course-level">Grade 6-8</span>
+                    <h3>Mathematics Fundamentals</h3>
+                    <p>Build strong foundation in algebra, geometry, and problem-solving techniques.</p>
+                    <div class="course-duration"><i class="fas fa-clock"></i> 12 weeks • 3 hours/week</div>
+                    <button class="enroll-btn" onclick="enrollCourse('Mathematics Fundamentals')">Enroll Now</button>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-image">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="course-info">
+                    <span class="course-level">Grade 9-12</span>
+                    <h3>English Literature & Writing</h3>
+                    <p>Develop critical reading skills and enhance creative writing abilities.</p>
+                    <div class="course-duration"><i class="fas fa-clock"></i> 16 weeks • 4 hours/week</div>
+                    <button class="enroll-btn" onclick="enrollCourse('English Literature & Writing')">Enroll Now</button>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-image">
+                    <i class="fas fa-flask"></i>
+                </div>
+                <div class="course-info">
+                    <span class="course-level">Grade 9-12</span>
+                    <h3>Science & Laboratory</h3>
+                    <p>Explore physics, chemistry, and biology through interactive experiments.</p>
+                    <div class="course-duration"><i class="fas fa-clock"></i> 20 weeks • 5 hours/week</div>
+                    <button class="enroll-btn" onclick="enrollCourse('Science & Laboratory')">Enroll Now</button>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-image">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <div class="course-info">
+                    <span class="course-level">Grade 6-12</span>
+                    <h3>Social Studies & History</h3>
+                    <p>Understand cultures, civilizations, and historical events that shaped our world.</p>
+                    <div class="course-duration"><i class="fas fa-clock"></i> 14 weeks • 3 hours/week</div>
+                    <button class="enroll-btn" onclick="enrollCourse('Social Studies & History')">Enroll Now</button>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-image">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <div class="course-info">
+                    <span class="course-level">Grade 8-12</span>
+                    <h3>Computer Science & Programming</h3>
+                    <p>Learn coding fundamentals, web development, and computational thinking.</p>
+                    <div class="course-duration"><i class="fas fa-clock"></i> 18 weeks • 4 hours/week</div>
+                    <button class="enroll-btn" onclick="enrollCourse('Computer Science & Programming')">Enroll Now</button>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-image">
+                    <i class="fas fa-language"></i>
+                </div>
+                <div class="course-info">
+                    <span class="course-level">All Levels</span>
+                    <h3>World Languages</h3>
+                    <p>Master new languages with immersive learning techniques and cultural context.</p>
+                    <div class="course-duration"><i class="fas fa-clock"></i> 24 weeks • 3 hours/week</div>
+                    <button class="enroll-btn" onclick="enrollCourse('World Languages')">Enroll Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Virtual Classroom Section -->
+    <section id="classroom" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Virtual Classroom Features</h2>
+                <p>Experience immersive learning in our state-of-the-art virtual environment</p>
+            </div>
+            <div class="classroom-features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>Live Video Lessons</h3>
+                    <p>Interactive video sessions with real-time Q&A and screen sharing capabilities.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Collaborative Learning</h3>
+                    <p>Work together on projects with classmates through our collaboration tools.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-whiteboard"></i>
+                    </div>
+                    <h3>Digital Whiteboard</h3>
+                    <p>Interactive whiteboard for demonstrations, problem-solving, and brainstorming.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3>Gamified Learning</h3>
+                    <p>Earn points, badges, and achievements as you progress through your courses.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Progress Tracking</h3>
+                    <p>Detailed analytics and reports to monitor learning progress and performance.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Learning</h3>
+                    <p>Access your courses anytime, anywhere with our mobile-friendly platform.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>About Ngoma Curriculum</h2>
+                <p>Revolutionizing education through innovative curriculum design</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Our Mission</h3>
+                    <p>To provide world-class, curriculum-based education that empowers students to reach their full potential. We believe every learner deserves access to quality education that adapts to their unique needs and learning style.</p>
+                    
+                    <h3>Why Choose Ngoma?</h3>
+                    <p>Our platform combines traditional curriculum standards with modern technology to create an engaging and effective learning experience. With certified instructors, interactive content, and comprehensive support, we ensure every student succeeds.</p>
+                    
+                    <div class="stats">
+                        <div class="stat">
+                            <h4>500+</h4>
+                            <p>Students Enrolled</p>
+                        </div>
+                        <div class="stat">
+                            <h4>25+</h4>
+                            <p>Expert Instructors</p>
+                        </div>
+                        <div class="stat">
+                            <h4>98%</h4>
+                            <p>Success Rate</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="image-placeholder">
+                        <i class="fas fa-graduation-cap"></i>
+                        <p>Interactive Learning</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Get Started Today</h2>
+                <p>Join thousands of students already learning with Ngoma Curriculum</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h3>Email</h3>
+                            <p>learn@ngomacurriculum.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h3>Phone</h3>
+                            <p>+1 (555) 234-5678</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h3>Support Hours</h3>
+                            <p>24/7 Online Support</p>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="text" placeholder="Student Name" required>
+                        <input type="email" placeholder="Parent/Guardian Email" required>
+                    </div>
+                    <div class="form-group">
+                        <select required>
+                            <option value="">Select Grade Level</option>
+                            <option value="elementary">Elementary (Grades 1-5)</option>
+                            <option value="middle">Middle School (Grades 6-8)</option>
+                            <option value="high">High School (Grades 9-12)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Learning Goals & Questions" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn primary">Request Information</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Ngoma Curriculum</h3>
+                    <p>Interactive Learning Platform</p>
+                    <div class="social-links">
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Courses</h4>
+                    <ul>
+                        <li><a href="#courses">Mathematics</a></li>
+                        <li><a href="#courses">English</a></li>
+                        <li><a href="#courses">Science</a></li>
+                        <li><a href="#courses">Social Studies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="#classroom">Virtual Classroom</a></li>
+                        <li><a href="#courses">Course Catalog</a></li>
+                        <li><a href="#about">Curriculum Standards</a></li>
+                        <li><a href="#contact">Student Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li>Help Center</li>
+                        <li>Technical Support</li>
+                        <li>Parent Resources</li>
+                        <li>Teacher Portal</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Ngoma Curriculum. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="dynamics.js"></script>
+    <script>
+        function enrollCourse(courseName) {
+            showNotification(`Thank you for your interest in ${courseName}! We'll contact you with enrollment details.`, 'success');
+        }
+        
+        // Form handling
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showNotification('Information request submitted! Our education consultants will contact you within 24 hours.', 'success');
+            this.reset();
+        });
+        
+        // Add animation to course cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.course-card, .feature-card, .path-step').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

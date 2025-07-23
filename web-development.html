@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FEFE Web Solutions - Professional Web Development Services</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .web-hero {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+        
+        .services-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+        
+        .service-showcase {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .service-showcase:hover {
+            transform: translateY(-8px);
+        }
+        
+        .service-image {
+            height: 200px;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+        
+        .service-content {
+            padding: 2rem;
+        }
+        
+        .service-price {
+            color: #1e3c72;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 1rem 0;
+        }
+        
+        .service-features {
+            list-style: none;
+            margin: 1rem 0;
+        }
+        
+        .service-features li {
+            padding: 0.3rem 0;
+            color: #666;
+        }
+        
+        .service-features li::before {
+            content: '✓';
+            color: #27ae60;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        
+        .get-quote-btn {
+            width: 100%;
+            background: #1e3c72;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+        
+        .get-quote-btn:hover {
+            background: #2a5298;
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .portfolio-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .portfolio-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .portfolio-image {
+            height: 200px;
+            background: linear-gradient(45deg, #f0f2ff, #e6f3ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #1e3c72;
+        }
+        
+        .portfolio-info {
+            padding: 1.5rem;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .tech-tag {
+            background: #e6f3ff;
+            color: #1e3c72;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .process-timeline {
+            background: #f8f9fa;
+            padding: 5rem 0;
+        }
+        
+        .timeline-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #1e3c72;
+            transform: translateX(-50%);
+        }
+        
+        .timeline-step {
+            display: flex;
+            margin: 3rem 0;
+            align-items: center;
+        }
+        
+        .timeline-step:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .timeline-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 45%;
+            position: relative;
+        }
+        
+        .timeline-number {
+            width: 60px;
+            height: 60px;
+            background: #1e3c72;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 0 2rem;
+            flex-shrink: 0;
+        }
+        
+        .pricing-table {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .pricing-card.featured {
+            transform: scale(1.05);
+            border: 3px solid #1e3c72;
+        }
+        
+        .pricing-card.featured::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e3c72;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-5px);
+        }
+        
+        .price {
+            font-size: 2.5rem;
+            color: #1e3c72;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+        
+        .price-period {
+            color: #666;
+            font-size: 1rem;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>FEFE</h2>
+                <span>Web Solutions</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#process">Process</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="web-hero">
+        <div class="container">
+            <h1>FEFE Web Solutions</h1>
+            <p>Professional web development services that drive business growth. From stunning websites to complex web applications, we bring your digital vision to life.</p>
+            <div class="hero-buttons">
+                <a href="#contact" class="btn primary">Get Free Quote</a>
+                <a href="#portfolio" class="btn secondary">View Portfolio</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="container">
+        <div class="section-header">
+            <h2>Our Web Development Services</h2>
+            <p>Comprehensive solutions for all your web development needs</p>
+        </div>
+        <div class="services-showcase">
+            <div class="service-showcase">
+                <div class="service-image">
+                    <i class="fas fa-laptop"></i>
+                </div>
+                <div class="service-content">
+                    <h3>Custom Website Development</h3>
+                    <p>Tailored websites built from scratch to match your unique business requirements and brand identity.</p>
+                    <ul class="service-features">
+                        <li>Responsive Design</li>
+                        <li>SEO Optimized</li>
+                        <li>Fast Loading Speed</li>
+                        <li>Cross-browser Compatible</li>
+                        <li>Content Management System</li>
+                    </ul>
+                    <div class="service-price">Starting at $2,999</div>
+                    <button class="get-quote-btn" onclick="requestQuote('Custom Website Development')">Get Quote</button>
+                </div>
+            </div>
+
+            <div class="service-showcase">
+                <div class="service-image">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="service-content">
+                    <h3>E-commerce Solutions</h3>
+                    <p>Powerful online stores with secure payment processing and inventory management systems.</p>
+                    <ul class="service-features">
+                        <li>Secure Payment Gateway</li>
+                        <li>Inventory Management</li>
+                        <li>Order Tracking</li>
+                        <li>Mobile Commerce</li>
+                        <li>Analytics Dashboard</li>
+                    </ul>
+                    <div class="service-price">Starting at $4,999</div>
+                    <button class="get-quote-btn" onclick="requestQuote('E-commerce Solutions')">Get Quote</button>
+                </div>
+            </div>
+
+            <div class="service-showcase">
+                <div class="service-image">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="service-content">
+                    <h3>Mobile App Development</h3>
+                    <p>Native and cross-platform mobile applications for iOS and Android devices.</p>
+                    <ul class="service-features">
+                        <li>iOS & Android Apps</li>
+                        <li>Cross-platform Development</li>
+                        <li>App Store Optimization</li>
+                        <li>Push Notifications</li>
+                        <li>Offline Functionality</li>
+                    </ul>
+                    <div class="service-price">Starting at $7,999</div>
+                    <button class="get-quote-btn" onclick="requestQuote('Mobile App Development')">Get Quote</button>
+                </div>
+            </div>
+
+            <div class="service-showcase">
+                <div class="service-image">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <div class="service-content">
+                    <h3>Web Application Development</h3>
+                    <p>Complex web applications with advanced functionality and database integration.</p>
+                    <ul class="service-features">
+                        <li>Database Integration</li>
+                        <li>User Authentication</li>
+                        <li>API Development</li>
+                        <li>Cloud Deployment</li>
+                        <li>Scalable Architecture</li>
+                    </ul>
+                    <div class="service-price">Starting at $8,999</div>
+                    <button class="get-quote-btn" onclick="requestQuote('Web Application Development')">Get Quote</button>
+                </div>
+            </div>
+
+            <div class="service-showcase">
+                <div class="service-image">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="service-content">
+                    <h3>SEO & Digital Marketing</h3>
+                    <p>Improve your online visibility and drive more traffic to your website.</p>
+                    <ul class="service-features">
+                        <li>On-page SEO</li>
+                        <li>Technical SEO</li>
+                        <li>Content Strategy</li>
+                        <li>Social Media Marketing</li>
+                        <li>Performance Analytics</li>
+                    </ul>
+                    <div class="service-price">Starting at $1,499/month</div>
+                    <button class="get-quote-btn" onclick="requestQuote('SEO & Digital Marketing')">Get Quote</button>
+                </div>
+            </div>
+
+            <div class="service-showcase">
+                <div class="service-image">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <div class="service-content">
+                    <h3>Website Maintenance</h3>
+                    <p>Keep your website secure, updated, and performing at its best with our maintenance services.</p>
+                    <ul class="service-features">
+                        <li>Security Updates</li>
+                        <li>Performance Optimization</li>
+                        <li>Content Updates</li>
+                        <li>Backup Services</li>
+                        <li>24/7 Monitoring</li>
+                    </ul>
+                    <div class="service-price">Starting at $299/month</div>
+                    <button class="get-quote-btn" onclick="requestQuote('Website Maintenance')">Get Quote</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="services" style="background: white;">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Portfolio</h2>
+                <p>Showcasing our best web development projects</p>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>EduTech Learning Platform</h3>
+                        <p>Comprehensive online learning management system with interactive courses and student tracking.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">MongoDB</span>
+                            <span class="tech-tag">AWS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Fashion E-commerce Store</h3>
+                        <p>Modern online fashion store with advanced filtering, wishlist, and secure checkout system.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Next.js</span>
+                            <span class="tech-tag">Stripe</span>
+                            <span class="tech-tag">PostgreSQL</span>
+                            <span class="tech-tag">Vercel</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Business Analytics Dashboard</h3>
+                        <p>Real-time data visualization platform for business intelligence and reporting.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Vue.js</span>
+                            <span class="tech-tag">D3.js</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Docker</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Healthcare Management System</h3>
+                        <p>Patient management and appointment scheduling system for healthcare providers.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Angular</span>
+                            <span class="tech-tag">Express.js</span>
+                            <span class="tech-tag">MySQL</span>
+                            <span class="tech-tag">Azure</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Restaurant Ordering App</h3>
+                        <p>Mobile-first food ordering application with real-time tracking and payment integration.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">React Native</span>
+                            <span class="tech-tag">Firebase</span>
+                            <span class="tech-tag">PayPal</span>
+                            <span class="tech-tag">Maps API</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Corporate Website</h3>
+                        <p>Professional corporate website with CMS, blog, and investor relations portal.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">WordPress</span>
+                            <span class="tech-tag">PHP</span>
+                            <span class="tech-tag">MySQL</span>
+                            <span class="tech-tag">SEO</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Development Process -->
+    <section id="process" class="process-timeline">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Development Process</h2>
+                <p>A proven methodology that ensures project success</p>
+            </div>
+            <div class="timeline-container">
+                <div class="timeline-step">
+                    <div class="timeline-content">
+                        <h3>Discovery & Planning</h3>
+                        <p>We understand your business goals, target audience, and project requirements to create a comprehensive development strategy.</p>
+                    </div>
+                    <div class="timeline-number">1</div>
+                </div>
+
+                <div class="timeline-step">
+                    <div class="timeline-content">
+                        <h3>Design & Prototyping</h3>
+                        <p>Our designers create wireframes and interactive prototypes to visualize the user experience before development begins.</p>
+                    </div>
+                    <div class="timeline-number">2</div>
+                </div>
+
+                <div class="timeline-step">
+                    <div class="timeline-content">
+                        <h3>Development & Coding</h3>
+                        <p>Our experienced developers build your solution using the latest technologies and best practices for optimal performance.</p>
+                    </div>
+                    <div class="timeline-number">3</div>
+                </div>
+
+                <div class="timeline-step">
+                    <div class="timeline-content">
+                        <h3>Testing & Quality Assurance</h3>
+                        <p>Rigorous testing ensures your application works flawlessly across all devices and browsers before launch.</p>
+                    </div>
+                    <div class="timeline-number">4</div>
+                </div>
+
+                <div class="timeline-step">
+                    <div class="timeline-content">
+                        <h3>Deployment & Launch</h3>
+                        <p>We handle the technical deployment process and ensure a smooth launch of your web solution.</p>
+                    </div>
+                    <div class="timeline-number">5</div>
+                </div>
+
+                <div class="timeline-step">
+                    <div class="timeline-content">
+                        <h3>Support & Maintenance</h3>
+                        <p>Ongoing support and maintenance services keep your website secure, updated, and performing optimally.</p>
+                    </div>
+                    <div class="timeline-number">6</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="container">
+        <div class="section-header">
+            <h2>Transparent Pricing</h2>
+            <p>Choose the package that best fits your needs</p>
+        </div>
+        <div class="pricing-table">
+            <div class="pricing-card">
+                <h3>Starter</h3>
+                <div class="price">$1,999 <span class="price-period">one-time</span></div>
+                <ul class="service-features">
+                    <li>5-page responsive website</li>
+                    <li>Mobile-friendly design</li>
+                    <li>Basic SEO setup</li>
+                    <li>Contact form integration</li>
+                    <li>3 months support</li>
+                </ul>
+                <button class="get-quote-btn" onclick="requestQuote('Starter Package')">Choose Starter</button>
+            </div>
+
+            <div class="pricing-card featured">
+                <h3>Professional</h3>
+                <div class="price">$4,999 <span class="price-period">one-time</span></div>
+                <ul class="service-features">
+                    <li>10-page responsive website</li>
+                    <li>Custom design & branding</li>
+                    <li>Advanced SEO optimization</li>
+                    <li>Content management system</li>
+                    <li>E-commerce functionality</li>
+                    <li>6 months support</li>
+                </ul>
+                <button class="get-quote-btn" onclick="requestQuote('Professional Package')">Choose Professional</button>
+            </div>
+
+            <div class="pricing-card">
+                <h3>Enterprise</h3>
+                <div class="price">$9,999+ <span class="price-period">one-time</span></div>
+                <ul class="service-features">
+                    <li>Unlimited pages</li>
+                    <li>Custom web application</li>
+                    <li>Database integration</li>
+                    <li>Advanced functionality</li>
+                    <li>Third-party integrations</li>
+                    <li>12 months support</li>
+                </ul>
+                <button class="get-quote-btn" onclick="requestQuote('Enterprise Package')">Choose Enterprise</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Start Your Project Today</h2>
+                <p>Ready to bring your web vision to life? Let's discuss your project</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h3>Email</h3>
+                            <p>projects@fefewebsolutions.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h3>Phone</h3>
+                            <p>+1 (555) 456-7890</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h3>Response Time</h3>
+                            <p>Within 24 hours</p>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form" id="projectForm">
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Your Name" required>
+                        <input type="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="company" placeholder="Company Name">
+                        <input type="tel" name="phone" placeholder="Phone Number">
+                    </div>
+                    <div class="form-group">
+                        <select name="service" title="Select Service" required>
+                            <option value="">Select Service</option>
+                            <option value="website">Custom Website</option>
+                            <option value="ecommerce">E-commerce Store</option>
+                            <option value="mobile">Mobile App</option>
+                            <option value="webapp">Web Application</option>
+                            <option value="seo">SEO & Marketing</option>
+                            <option value="maintenance">Website Maintenance</option>
+                        </select>
+                        <select name="budget" title="Select Budget" required>
+                            <option value="">Project Budget</option>
+                            <option value="under-5k">Under $5,000</option>
+                            <option value="5k-10k">$5,000 - $10,000</option>
+                            <option value="10k-25k">$10,000 - $25,000</option>
+                            <option value="25k-50k">$25,000 - $50,000</option>
+                            <option value="over-50k">Over $50,000</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="description" placeholder="Describe your project requirements, goals, and timeline..." rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn primary">Get Free Quote</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>FEFE Web Solutions</h3>
+                    <p>Professional Web Development</p>
+                    <div class="social-links">
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#services">Website Development</a></li>
+                        <li><a href="#services">E-commerce Solutions</a></li>
+                        <li><a href="#services">Mobile Apps</a></li>
+                        <li><a href="#services">Web Applications</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="index.html">FEFE Holdings</a></li>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                        <li><a href="#process">Our Process</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li>Project Consultation</li>
+                        <li>Technical Support</li>
+                        <li>Maintenance Services</li>
+                        <li>Documentation</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FEFE Web Solutions. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="dynamics.js"></script>
+    <script>
+        function requestQuote(service) {
+            showNotification(`Quote request for ${service} submitted! We'll contact you within 24 hours with a detailed proposal.`, 'success');
+        }
+        
+        // Project form handling
+        document.getElementById('projectForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Show success message
+            showNotification('Project inquiry submitted successfully! Our team will review your requirements and contact you within 24 hours with a detailed quote.', 'success');
+            
+            // Reset form
+            this.reset();
+        });
+        
+        // Add animation to service showcases
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.service-showcase, .portfolio-item, .timeline-step, .pricing-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+        
+        // Stagger animation for timeline
+        document.querySelectorAll('.timeline-step').forEach((el, index) => {
+            el.style.transitionDelay = `${index * 0.2}s`;
+        });
+    </script>
+</body>
+</html>

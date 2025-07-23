@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FEFE Wear - Sustainable Fashion & Style</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .shop-hero {
+            background: linear-gradient(135deg, #8B7355 0%, #D4B896 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-image {
+            height: 250px;
+            background: linear-gradient(45deg, #F5F0E8, #E8DCC0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #8B7355;
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #8B7355;
+            margin: 0.5rem 0;
+        }
+        
+        .add-to-cart {
+            width: 100%;
+            background: #8B7355;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+        
+        .add-to-cart:hover {
+            background: #A0845C;
+        }
+        
+        .cart-icon {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: #8B7355;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(139, 115, 85, 0.3);
+            z-index: 1000;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .category-btn {
+            padding: 0.5rem 1.5rem;
+            border: 2px solid #8B7355;
+            background: transparent;
+            color: #8B7355;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn.active,
+        .category-btn:hover {
+            background: #8B7355;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>FEFE</h2>
+                <span>Wear</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#shop">Shop</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#sustainability">Sustainability</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Icon -->
+    <div class="cart-icon" onclick="toggleCart()">
+        <i class="fas fa-shopping-bag"></i>
+        <span class="cart-count">0</span>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="shop-hero">
+        <div class="container">
+            <h1>FEFE Wear Collection</h1>
+            <p>Inspired by nature, crafted with care. Our clothing collection embodies the same premium quality and natural aesthetic as our beloved FEFE Nuts brand.</p>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="container">
+        <div class="categories">
+            <button class="category-btn active" data-category="all">All Items</button>
+            <button class="category-btn" data-category="shirts">Shirts</button>
+            <button class="category-btn" data-category="dresses">Dresses</button>
+            <button class="category-btn" data-category="accessories">Accessories</button>
+            <button class="category-btn" data-category="shoes">Shoes</button>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="shop" class="container">
+        <div class="section-header">
+            <h2>Our Products</h2>
+            <p>Ethically made, sustainably sourced, beautifully designed</p>
+        </div>
+        <div class="product-grid">
+            <div class="product-card" data-category="shirts">
+                <div class="product-image">
+                    <i class="fas fa-tshirt"></i>
+                </div>
+                <div class="product-info">
+                    <h3>Organic Cotton T-Shirt</h3>
+                    <p>Soft, comfortable, and made from 100% organic cotton. Perfect for everyday wear.</p>
+                    <div class="product-price">$29.99</div>
+                    <button class="add-to-cart" onclick="addToCart('Organic Cotton T-Shirt', 29.99)">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="dresses">
+                <div class="product-image">
+                    <i class="fas fa-female"></i>
+                </div>
+                <div class="product-info">
+                    <h3>Sustainable Summer Dress</h3>
+                    <p>Flowing and elegant dress made from recycled materials. Perfect for any occasion.</p>
+                    <div class="product-price">$79.99</div>
+                    <button class="add-to-cart" onclick="addToCart('Sustainable Summer Dress', 79.99)">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="shirts">
+                <div class="product-image">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="product-info">
+                    <h3>Eco-Friendly Button Shirt</h3>
+                    <p>Professional and stylish shirt crafted from sustainable bamboo fiber.</p>
+                    <div class="product-price">$49.99</div>
+                    <button class="add-to-cart" onclick="addToCart('Eco-Friendly Button Shirt', 49.99)">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="accessories">
+                <div class="product-image">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <div class="product-info">
+                    <h3>FEFE Nuts Inspired Tote Bag</h3>
+                    <p>Premium canvas tote bag featuring our signature FEFE branding. Perfect for carrying your daily essentials with style.</p>
+                    <div class="product-price">$24.99</div>
+                    <button class="add-to-cart" onclick="addToCart('FEFE Nuts Inspired Tote Bag', 24.99)">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="shirts">
+                <div class="product-image">
+                    <i class="fas fa-seedling"></i>
+                </div>
+                <div class="product-info">
+                    <h3>Organic FEFE Logo T-Shirt</h3>
+                    <p>Soft organic cotton t-shirt with the iconic FEFE logo. Available in natural earth tones inspired by our macadamia packaging.</p>
+                    <div class="product-price">$29.99</div>
+                    <button class="add-to-cart" onclick="addToCart('Organic FEFE Logo T-Shirt', 29.99)">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="accessories">
+                <div class="product-image">
+                    <i class="fas fa-mug-hot"></i>
+                </div>
+                <div class="product-info">
+                    <h3>FEFE Ceramic Mug Collection</h3>
+                    <p>Beautiful ceramic mugs in honey, chilli lime, cinnamon, and chocolate themes. Perfect for your morning coffee.</p>
+                    <div class="product-price">$19.99</div>
+                    <button class="add-to-cart" onclick="addToCart('FEFE Ceramic Mug Collection', 19.99)">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="shoes">
+                <div class="product-image">
+                    <i class="fas fa-shoe-prints"></i>
+                </div>
+                <div class="product-info">
+                    <h3>Vegan Leather Sneakers</h3>
+                    <p>Comfortable and cruelty-free sneakers made from innovative vegan leather.</p>
+                    <div class="product-price">$89.99</div>
+                    <button class="add-to-cart" onclick="addToCart('Vegan Leather Sneakers', 89.99)">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="dresses">
+                <div class="product-image">
+                    <i class="fas fa-user-friends"></i>
+                </div>
+                <div class="product-info">
+                    <h3>Casual Midi Dress</h3>
+                    <p>Versatile midi dress perfect for work or weekend. Made from sustainable materials.</p>
+                    <div class="product-price">$69.99</div>
+                    <button class="add-to-cart" onclick="addToCart('Casual Midi Dress', 69.99)">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="accessories">
+                <div class="product-image">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <div class="product-info">
+                    <h3>Eco Tote Bag</h3>
+                    <p>Durable tote bag made from recycled plastic bottles. Perfect for shopping and daily use.</p>
+                    <div class="product-price">$19.99</div>
+                    <button class="add-to-cart" onclick="addToCart('Eco Tote Bag', 19.99)">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="shirts">
+                <div class="product-image">
+                    <i class="fas fa-mountain"></i>
+                </div>
+                <div class="product-info">
+                    <h3>Earth Tone Hoodie Collection</h3>
+                    <p>Premium hoodies in honey, cinnamon, and chocolate colors inspired by our macadamia nut flavors. Sustainably made.</p>
+                    <div class="product-price">$59.99</div>
+                    <button class="add-to-cart" onclick="addToCart('Earth Tone Hoodie Collection', 59.99)">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sustainability Section -->
+    <section id="sustainability" class="about" style="background: #f8f9fa;">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Commitment to Sustainability</h2>
+                <p>Fashion that cares for our planet</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-item">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Organic Materials</h3>
+                    <p>We use only certified organic and sustainable materials in our products.</p>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-recycle"></i>
+                    <h3>Recycled Fabrics</h3>
+                    <p>Many of our items are made from recycled materials, reducing waste.</p>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-hands-helping"></i>
+                    <h3>Fair Trade</h3>
+                    <p>We partner with fair trade certified suppliers to ensure ethical production.</p>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-shipping-fast"></i>
+                    <h3>Carbon Neutral Shipping</h3>
+                    <p>All our shipments are carbon neutral to minimize environmental impact.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>FEFE Wear</h3>
+                    <p>Sustainable Fashion & Style</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Shop</h4>
+                    <ul>
+                        <li><a href="#shop">All Products</a></li>
+                        <li><a href="#shop">New Arrivals</a></li>
+                        <li><a href="#shop">Sale Items</a></li>
+                        <li><a href="#shop">Gift Cards</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="index.html">FEFE Holdings</a></li>
+                        <li><a href="#sustainability">Sustainability</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li>Size Guide</li>
+                        <li>Returns & Exchanges</li>
+                        <li>Shipping Info</li>
+                        <li>Customer Service</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FEFE Wear. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="dynamics.js"></script>
+    <script>
+        let cart = [];
+        
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCartCount();
+            showNotification(`${name} added to cart!`, 'success');
+        }
+        
+        function updateCartCount() {
+            document.querySelector('.cart-count').textContent = cart.length;
+        }
+        
+        function toggleCart() {
+            if (cart.length === 0) {
+                showNotification('Your cart is empty!', 'info');
+                return;
+            }
+            
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            const items = cart.map(item => `${item.name} - $${item.price}`).join('\n');
+            
+            showNotification(`Cart Items:\n${items}\n\nTotal: $${total.toFixed(2)}`, 'info');
+        }
+        
+        // Category filtering
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active button
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Filter products
+                const category = btn.dataset.category;
+                const products = document.querySelectorAll('.product-card');
+                
+                products.forEach(product => {
+                    if (category === 'all' || product.dataset.category === category) {
+                        product.style.display = 'block';
+                    } else {
+                        product.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
