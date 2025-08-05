@@ -2,7 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-            .bot-message {
+            background: linear-gradient(90deg, #ff6a00 0%, #43cea2 100%);
+            color: white;
+        }
+
+        #closeChat {
+            cursor: pointer;
+        }
+    </style>, initial-scale=1.0">
     <title>FEFE Holdings | AI Education, Innovation & Creative Collaboration</title>
     <meta name="description" content="FEFE Holdings is a vibrant platform for innovation, AI-powered education, creative collaboration, and digital solutions—empowering talent and building tomorrow’s world today.">
     <meta name="keywords" content="FEFE, AI education, digital learning, innovation, technology, fashion, creative collaboration, Africa, global learning, digital solutions, talent hub">
@@ -21,6 +29,178 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .chat-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .chat-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 1001;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        .typing-indicator {
+            padding: 8px;
+            font-size: 0.9em;
+            color: #666;
+            font-style: italic;
+        }
+
+        .file-upload {
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .file-upload input[type="file"] {
+            display: none;
+        }
+
+        .file-upload label {
+            display: inline-block;
+            padding: 6px 12px;
+            cursor: pointer;
+            background: #f0f0f0;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+
+        .file-preview {
+            margin: 5px 0;
+            max-width: 200px;
+        }
+
+        .online-status {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        .online-status.online {
+            background: #4CAF50;
+        }
+
+        .online-status.offline {
+            background: #9e9e9e;
+        }
+
+        .read-receipt {
+            font-size: 0.7em;
+            color: #666;
+            text-align: right;
+            margin-top: 2px;
+        }
+
+        .chat-button {
+            background: linear-gradient(90deg, #ff6a00 0%, #43cea2 100%);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .chat-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .chat-window {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-window.active {
+            display: flex;
+        }
+
+        .chat-header {
+            background: linear-gradient(90deg, #ff6a00 0%, #43cea2 100%);
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .chat-input {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        .chat-input button {
+            background: linear-gradient(90deg, #ff6a00 0%, #43cea2 100%);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 15px;
+            max-width: 80%;
+        }
+
+        .user-message {
+            background: #f0f0f0;
+            margin-left: auto;
+        }
+
+        .bot-message {
+            background: linear-gradient(90deg, #ff6a00 0%, #43cea2 100%);
+            color: white;
+        }
+    </style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -325,6 +505,287 @@
             </div>
         </div>
     </section>
+
+    <!-- Chat Widget -->
+    <div class="chat-widget">
+        <button class="chat-button" id="chatButton">
+            <i class="fas fa-comments"></i>
+            Chat with us
+        </button>
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <span>FEFE Support</span>
+                <i class="fas fa-times" id="closeChat"></i>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    Hello! How can we help you today?
+                </div>
+            </div>
+            <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                Someone is typing...
+            </div>
+            <div class="file-upload">
+                <label for="fileInput">
+                    <i class="fas fa-paperclip"></i> Attach File
+                </label>
+                <input type="file" id="fileInput" accept="image/*,application/pdf,.doc,.docx,.txt">
+                <div id="filePreview" class="file-preview"></div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="messageInput" placeholder="Type your message...">
+                <button id="sendMessage">Send</button>
+            </div>
+        </div>
+    </div>
+    <div class="chat-notification" id="chatNotification">
+        <div class="notification-content"></div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script>
+        // Chat Widget Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatButton = document.getElementById('chatButton');
+            const chatWindow = document.getElementById('chatWindow');
+            const closeChat = document.getElementById('closeChat');
+            const messageInput = document.getElementById('messageInput');
+            const sendMessage = document.getElementById('sendMessage');
+            const chatMessages = document.getElementById('chatMessages');
+            const fileInput = document.getElementById('fileInput');
+            const filePreview = document.getElementById('filePreview');
+            const typingIndicator = document.getElementById('typingIndicator');
+            const chatNotification = document.getElementById('chatNotification');
+
+            let typingTimeout;
+            const currentUser = {
+                id: localStorage.getItem('userId') || 'guest_' + Date.now(),
+                name: localStorage.getItem('userName') || 'Guest'
+            };
+
+            // Connect to WebSocket server
+            const socket = io('http://localhost:5000', {
+                withCredentials: true
+            });
+
+            // Handle connection events
+            socket.on('connect', () => {
+                console.log('Connected to chat server');
+                socket.emit('join', {
+                    userId: currentUser.id,
+                    userName: currentUser.name
+                });
+            });
+
+            socket.on('connect_error', (error) => {
+                console.error('Connection error:', error);
+                addMessage('Unable to connect to chat server. Please try again later.', false);
+            });
+
+            // Handle incoming messages
+            socket.on('chat message', (data) => {
+                if (data.userId !== currentUser.id) {
+                    addMessage(data.message, false, data.attachments, data.id);
+                    // Mark message as read
+                    socket.emit('message read', {
+                        messageId: data.id,
+                        userId: currentUser.id
+                    });
+                }
+            });
+
+            // Handle typing indicators
+            socket.on('user typing', (data) => {
+                if (data.userId !== currentUser.id) {
+                    typingIndicator.textContent = `${data.userName} is typing...`;
+                    typingIndicator.style.display = 'block';
+                }
+            });
+
+            socket.on('user stop typing', (data) => {
+                if (data.userId !== currentUser.id) {
+                    typingIndicator.style.display = 'none';
+                }
+            });
+
+            // Handle read receipts
+            socket.on('read receipt', (data) => {
+                const messageElement = document.querySelector(`[data-message-id="${data.messageId}"]`);
+                if (messageElement) {
+                    const readReceipt = messageElement.querySelector('.read-receipt');
+                    if (readReceipt) {
+                        readReceipt.textContent = 'Read ' + new Date(data.timestamp).toLocaleTimeString();
+                    }
+                }
+            });
+
+            // Handle user status
+            socket.on('user status', (data) => {
+                const statusDot = document.querySelector(`[data-user-id="${data.userId}"]`);
+                if (statusDot) {
+                    statusDot.className = `online-status ${data.status}`;
+                }
+            });
+
+            // Handle notifications
+            socket.on('new message notification', (data) => {
+                if (!document.hasFocus() || !chatWindow.classList.contains('active')) {
+                    showNotification(`${data.from}: ${data.preview}`);
+                }
+            });
+
+            chatButton.addEventListener('click', () => {
+                chatWindow.classList.toggle('active');
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                chatNotification.style.display = 'none';
+            });
+
+            closeChat.addEventListener('click', () => {
+                chatWindow.classList.remove('active');
+            });
+
+            // File upload handling
+            fileInput.addEventListener('change', async (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const formData = new FormData();
+                    formData.append('file', file);
+
+                    try {
+                        const response = await fetch('/api/chat/upload', {
+                            method: 'POST',
+                            body: formData,
+                            credentials: 'include'
+                        });
+                        const data = await response.json();
+                        
+                        // Preview the file
+                        if (file.type.startsWith('image/')) {
+                            const reader = new FileReader();
+                            reader.onload = (e) => {
+                                filePreview.innerHTML = `<img src="${e.target.result}" style="max-width: 100%; max-height: 100px;">`;
+                            };
+                            reader.readAsDataURL(file);
+                        } else {
+                            filePreview.innerHTML = `<div>${file.name}</div>`;
+                        }
+
+                        // Store the file info to send with the next message
+                        filePreview.dataset.fileInfo = JSON.stringify(data);
+                    } catch (error) {
+                        console.error('Error uploading file:', error);
+                        addMessage('Error uploading file. Please try again.', false);
+                    }
+                }
+            });
+
+            function addMessage(message, isUser = false, attachments = [], messageId) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+                if (messageId) messageDiv.dataset.messageId = messageId;
+
+                // Add message text
+                messageDiv.textContent = message;
+
+                // Add attachments if any
+                if (attachments && attachments.length > 0) {
+                    const attachmentsDiv = document.createElement('div');
+                    attachmentsDiv.className = 'message-attachments';
+                    attachments.forEach(attachment => {
+                        if (attachment.mimetype.startsWith('image/')) {
+                            const img = document.createElement('img');
+                            img.src = attachment.path;
+                            img.style.maxWidth = '200px';
+                            attachmentsDiv.appendChild(img);
+                        } else {
+                            const link = document.createElement('a');
+                            link.href = attachment.path;
+                            link.textContent = attachment.originalName;
+                            link.target = '_blank';
+                            attachmentsDiv.appendChild(link);
+                        }
+                    });
+                    messageDiv.appendChild(attachmentsDiv);
+                }
+
+                // Add read receipt div
+                if (isUser) {
+                    const readReceipt = document.createElement('div');
+                    readReceipt.className = 'read-receipt';
+                    readReceipt.textContent = 'Sent';
+                    messageDiv.appendChild(readReceipt);
+                }
+
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function showNotification(text) {
+                const notification = document.getElementById('chatNotification');
+                notification.querySelector('.notification-content').textContent = text;
+                notification.style.display = 'block';
+                
+                // Hide notification after 5 seconds
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 5000);
+            }
+
+            // Typing indicator handling
+            messageInput.addEventListener('input', () => {
+                clearTimeout(typingTimeout);
+                socket.emit('typing', {
+                    userId: currentUser.id,
+                    userName: currentUser.name
+                });
+
+                typingTimeout = setTimeout(() => {
+                    socket.emit('stop typing', {
+                        userId: currentUser.id
+                    });
+                }, 1000);
+            });
+
+            function handleMessage() {
+                const message = messageInput.value.trim();
+                const fileInfo = filePreview.dataset.fileInfo ? JSON.parse(filePreview.dataset.fileInfo) : null;
+
+                if (message || fileInfo) {
+                    // Clear typing indicator
+                    socket.emit('stop typing', {
+                        userId: currentUser.id
+                    });
+
+                    // Prepare message data
+                    const messageData = {
+                        userId: currentUser.id,
+                        userName: currentUser.name,
+                        message: message,
+                        attachments: fileInfo ? [fileInfo] : []
+                    };
+
+                    // Add message to local display
+                    addMessage(message, true, messageData.attachments);
+                    
+                    // Clear input
+                    messageInput.value = '';
+                    filePreview.innerHTML = '';
+                    filePreview.dataset.fileInfo = '';
+                    fileInput.value = '';
+
+                    // Send message to server
+                    socket.emit('chat message', messageData);
+                }
+            }
+
+            sendMessage.addEventListener('click', handleMessage);
+            messageInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    handleMessage();
+                }
+            });
+        });
+    </script>
 
     <!-- Contact Section -->
     <section id="contact" class="contact">

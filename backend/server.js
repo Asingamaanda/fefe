@@ -5,10 +5,13 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const mongoose = require('mongoose');
 const path = require('path');
+const { createServer } = require('http');
+const { Server } = require('socket.io');
 require('dotenv').config();
 
 // Import routes
 const authRoutes = require('./routes/auth');
+const chatRoutes = require('./routes/chat');
 const productRoutes = require('./routes/products');
 const orderRoutes = require('./routes/orders');
 const courseRoutes = require('./routes/courses');
@@ -22,6 +25,13 @@ const collaborationRoutes = require('./routes/collaborations');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+  cors: {
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    methods: ['GET', 'POST']
+  }
+});
 
 // Security middleware
 app.use(helmet());
@@ -65,6 +75,111 @@ app.use('/api/payments', paymentRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/uploads', uploadRoutes);
 app.use('/api/ai-learning', aiLearningRoutes);
+app.use('/api/chat', chatRoutes);
+
+// Socket.IO setup
+io.on('connection', (socket) => {
+  console.log('User connected:', socket.id);
+  let currentUser = null;
+
+  socket.on('join', (userData) => {
+    currentUser = {
+      id: userData.userId,
+      name: userData.userName
+    };
+    
+    // Add user to online users
+    onlineUsers.set(currentUser.id, {
+      status: 'online',
+      socketId: socket.id,
+      lastSeen: new Date()
+    });
+
+    socket.join(`user_${currentUser.id}`);
+    
+    // Broadcast user online status
+    io.emit('user status', {
+      userId: currentUser.id,
+      status: 'online',
+      lastSeen: new Date()
+    });
+  });
+
+  socket.on('chat message', async (data) => {
+    try {
+      const message = {
+        userId: data.userId,
+        userName: data.userName,
+        message: data.message,
+        timestamp: new Date(),
+        id: Date.now().toString(),
+        attachments: data.attachments || [],
+        read: new Map()
+      };
+
+      // Broadcast to all connected clients
+      io.emit('chat message', message);
+
+      // Send notification to all other users
+      socket.broadcast.emit('new message notification', {
+        from: data.userName,
+        preview: data.message.substring(0, 50)
+      });
+    } catch (error) {
+      console.error('Error handling chat message:', error);
+      socket.emit('error', { message: 'Error processing message' });
+    }
+  });
+
+  // Handle typing status
+  socket.on('typing', (data) => {
+    typingUsers.set(data.userId, {
+      userName: data.userName,
+      timestamp: new Date()
+    });
+    socket.broadcast.emit('user typing', {
+      userId: data.userId,
+      userName: data.userName
+    });
+  });
+
+  socket.on('stop typing', (data) => {
+    typingUsers.delete(data.userId);
+    socket.broadcast.emit('user stop typing', {
+      userId: data.userId
+    });
+  });
+
+  // Handle read receipts
+  socket.on('message read', (data) => {
+    const message = chatMessages.find(m => m.id === data.messageId);
+    if (message) {
+      message.read.set(data.userId, new Date());
+      io.emit('read receipt', {
+        messageId: data.messageId,
+        userId: data.userId,
+        timestamp: new Date()
+      });
+    }
+  });
+
+  socket.on('disconnect', () => {
+    if (currentUser) {
+      onlineUsers.set(currentUser.id, {
+        status: 'offline',
+        lastSeen: new Date()
+      });
+
+      // Broadcast user offline status
+      io.emit('user status', {
+        userId: currentUser.id,
+        status: 'offline',
+        lastSeen: new Date()
+      });
+    }
+    console.log('User disconnected:', socket.id);
+  });
+});
 
 // Serve uploaded files statically
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -122,10 +237,11 @@ app.use('*', (req, res) => {
 });
 
 // Start server
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`🚀 FEFE Backend API is running on port ${PORT}`);
   console.log(`📱 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`🌐 API URL: http://localhost:${PORT}/api`);
+  console.log(`💬 WebSocket server is running`);
 });
 
 module.exports = app;
