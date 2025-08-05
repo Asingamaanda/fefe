@@ -30,12 +30,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
         .chat-widget {
             position: fixed;
             bottom: 20px;
             right: 20px;
             z-index: 1000;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         .chat-notification {
@@ -57,15 +59,26 @@
         }
 
         .typing-indicator {
-            padding: 8px;
+            padding: 12px;
             font-size: 0.9em;
-            color: #666;
+            color: rgba(255, 255, 255, 0.6);
             font-style: italic;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            margin: 0 20px;
+            animation: pulse 1.5s ease infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
         }
 
         .file-upload {
-            padding: 10px;
-            border-top: 1px solid #eee;
+            padding: 15px 20px;
+            background: #1a1a1a;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .file-upload input[type="file"] {
@@ -73,132 +86,275 @@
         }
 
         .file-upload label {
-            display: inline-block;
-            padding: 6px 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
             cursor: pointer;
-            background: #f0f0f0;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
             border-radius: 15px;
             font-size: 0.9em;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload label:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #784BA0;
+        }
+
+        .file-upload label i {
+            font-size: 1.2em;
+            color: #FF3CAC;
         }
 
         .file-preview {
-            margin: 5px 0;
+            margin: 10px 0;
             max-width: 200px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .file-preview img {
+            border-radius: 8px;
         }
 
         .online-status {
-            width: 8px;
-            height: 8px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             display: inline-block;
-            margin-right: 5px;
+            margin-right: 8px;
+            position: relative;
         }
 
         .online-status.online {
-            background: #4CAF50;
+            background: #00f2ea;
+            box-shadow: 0 0 10px rgba(0, 242, 234, 0.5);
+        }
+
+        .online-status.online::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 50%;
+            border: 2px solid #00f2ea;
+            animation: ping 1.5s ease-out infinite;
+        }
+
+        @keyframes ping {
+            0% { transform: scale(1); opacity: 1; }
+            75%, 100% { transform: scale(2); opacity: 0; }
         }
 
         .online-status.offline {
-            background: #9e9e9e;
+            background: #fe2c55;
+            opacity: 0.5;
         }
 
         .read-receipt {
-            font-size: 0.7em;
-            color: #666;
+            font-size: 0.75em;
+            color: rgba(255, 255, 255, 0.5);
             text-align: right;
-            margin-top: 2px;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 4px;
+        }
+
+        .read-receipt i {
+            font-size: 1.2em;
+            color: #00f2ea;
+        }
+
+        .chat-notification {
+            background: linear-gradient(120deg, rgba(255, 60, 172, 0.95) 0%, rgba(120, 75, 160, 0.95) 100%);
+            border-radius: 16px;
+            padding: 15px 20px;
+            box-shadow: 0 8px 25px rgba(255, 60, 172, 0.3);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform-origin: right;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from { transform: translateX(100%) scale(0.8); opacity: 0; }
+            to { transform: translateX(0) scale(1); opacity: 1; }
         }
 
         .chat-button {
-            background: linear-gradient(90deg, #ff6a00 0%, #43cea2 100%);
+            background: linear-gradient(120deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
             color: white;
             border: none;
-            padding: 15px 25px;
-            border-radius: 25px;
+            padding: 18px 28px;
+            border-radius: 30px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
+            gap: 12px;
+            box-shadow: 0 8px 25px rgba(255, 60, 172, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 1.1em;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
         .chat-button:hover {
-            transform: translateY(-2px);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(255, 60, 172, 0.4);
+        }
+
+        .chat-button i {
+            font-size: 1.2em;
         }
 
         .chat-window {
             position: fixed;
-            bottom: 80px;
+            bottom: 90px;
             right: 20px;
-            width: 300px;
-            height: 400px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-            display: none;
+            width: 340px;
+            height: 480px;
+            background: #111;
+            border-radius: 24px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+            display: flex;
             flex-direction: column;
             overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .chat-window.active {
-            display: flex;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: all;
         }
 
         .chat-header {
-            background: linear-gradient(90deg, #ff6a00 0%, #43cea2 100%);
+            background: linear-gradient(120deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
             color: white;
-            padding: 15px;
+            padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-weight: 600;
+            font-size: 1.1em;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-header i {
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .chat-header i:hover {
+            transform: rotate(90deg);
         }
 
         .chat-messages {
             flex: 1;
-            padding: 15px;
+            padding: 20px;
             overflow-y: auto;
+            background: #111;
+            scroll-behavior: smooth;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
         }
 
         .chat-input {
-            padding: 15px;
-            border-top: 1px solid #eee;
+            padding: 20px;
+            background: #1a1a1a;
             display: flex;
-            gap: 10px;
+            gap: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .chat-input input {
             flex: 1;
-            padding: 8px 12px;
-            border: 1px solid #ddd;
+            padding: 12px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             outline: none;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input input:focus {
+            border-color: #784BA0;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-input input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
         }
 
         .chat-input button {
-            background: linear-gradient(90deg, #ff6a00 0%, #43cea2 100%);
+            background: linear-gradient(120deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
             color: white;
             border: none;
-            padding: 8px 15px;
+            padding: 12px 24px;
             border-radius: 20px;
             cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .chat-input button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 60, 172, 0.3);
         }
 
         .message {
-            margin-bottom: 10px;
-            padding: 8px 12px;
-            border-radius: 15px;
-            max-width: 80%;
+            margin-bottom: 15px;
+            padding: 12px 18px;
+            border-radius: 20px;
+            max-width: 85%;
+            font-size: 0.95em;
+            line-height: 1.4;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .message:hover {
+            transform: translateY(-1px);
         }
 
         .user-message {
-            background: #f0f0f0;
+            background: linear-gradient(120deg, #784BA0 0%, #2B86C5 100%);
+            color: white;
             margin-left: auto;
+            border-bottom-right-radius: 5px;
         }
 
         .bot-message {
-            background: linear-gradient(90deg, #ff6a00 0%, #43cea2 100%);
+            background: rgba(255, 255, 255, 0.05);
             color: white;
+            border-bottom-left-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
     </style>
 <script type="application/ld+json">
@@ -509,37 +665,42 @@
     <!-- Chat Widget -->
     <div class="chat-widget">
         <button class="chat-button" id="chatButton">
-            <i class="fas fa-comments"></i>
-            Chat with us
+            <i class="fas fa-message-dots"></i>
+            Let's Talk! ✨
         </button>
         <div class="chat-window" id="chatWindow">
             <div class="chat-header">
-                <span>FEFE Support</span>
+                <span>✨ FEFE Chat ✌️</span>
                 <i class="fas fa-times" id="closeChat"></i>
             </div>
             <div class="chat-messages" id="chatMessages">
                 <div class="message bot-message">
-                    Hello! How can we help you today?
+                    Hey there! 👋 What's on your mind? We're here to help! 🚀
                 </div>
             </div>
-            <div class="typing-indicator" id="typingIndicator" style="display: none;">
-                Someone is typing...
+            <div class="typing-indicator" id="typingIndicator">
+                ✨ someone's typing something cool...
             </div>
             <div class="file-upload">
                 <label for="fileInput">
-                    <i class="fas fa-paperclip"></i> Attach File
+                    <i class="fas fa-sparkles"></i> Drop your files here ✨
                 </label>
                 <input type="file" id="fileInput" accept="image/*,application/pdf,.doc,.docx,.txt">
                 <div id="filePreview" class="file-preview"></div>
             </div>
             <div class="chat-input">
-                <input type="text" id="messageInput" placeholder="Type your message...">
-                <button id="sendMessage">Send</button>
+                <input type="text" id="messageInput" placeholder="Type something amazing... ✨">
+                <button id="sendMessage">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
             </div>
         </div>
     </div>
     <div class="chat-notification" id="chatNotification">
-        <div class="notification-content"></div>
+        <div class="notification-content">
+            <i class="fas fa-sparkles"></i>
+            <span class="notification-text"></span>
+        </div>
     </div>
 
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
@@ -575,6 +736,11 @@
                     userId: currentUser.id,
                     userName: currentUser.name
                 });
+                // Automatically open chat window when connected
+                setTimeout(() => {
+                    chatWindow.classList.add('active');
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1000); // Small delay to ensure smooth animation
             });
 
             socket.on('connect_error', (error) => {
