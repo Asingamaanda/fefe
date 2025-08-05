@@ -1,12 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+<html lang="en">    <style>
+        .tiktok-section {
+            background: linear-gradient(135deg, #ff0050 0%, #00f2ea 100%);
+            padding: 60px 0;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .tiktok-carousel {
+            position: relative;
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 4rem;
+        }
+
+        .tiktok-carousel-container {
+            display: flex;
+            gap: 2rem;
+            transition: transform 0.5s ease;
+            padding: 1rem;
+        }
+
+        .tiktok-carousel-slide {
+            flex: 0 0 340px;
+            opacity: 0.7;
+            transform: scale(0.9);
+            transition: all 0.5s ease;
+        }
+
+        .tiktok-carousel-slide.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .carousel-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-button.prev {
+            left: 0;
+        }
+
+        .carousel-button.next {
+            right: 0;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background: white;
+            transform: scale(1.3);
+        }eta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FEFE Wear - Sustainable Fashion & Style</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://www.tiktok.com/embed.js"></script>
     <style>
         .shop-hero {
             background: linear-gradient(135deg, #8B7355 0%, #D4B896 100%);
@@ -28,6 +113,85 @@
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
+        }
+
+        /* TikTok Section Styles */
+        .tiktok-section {
+            background: linear-gradient(135deg, #ff0050 0%, #00f2ea 100%);
+            padding: 60px 0;
+            color: white;
+            text-align: center;
+        }
+
+        .tiktok-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .tiktok-embed {
+            border-radius: 20px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .tiktok-embed:hover {
+            transform: translateY(-10px);
+        }
+
+        .tiktok-cta {
+            background: black;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .tiktok-cta:hover {
+            transform: scale(1.05);
+            background: #ff0050;
+        }
+
+        .tiktok-cta i {
+            font-size: 1.2em;
+        }
+
+        .social-share {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .social-share a {
+            background: rgba(255,255,255,0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-share a:hover {
+            background: white;
+            color: #ff0050;
+            transform: translateY(-3px);
+        }
         }
         
         .product-card:hover {
@@ -410,6 +574,71 @@
         </div>
     </section>
 
+    <!-- TikTok Section -->
+    <section class="tiktok-section">
+        <div class="container">
+            <h2>✨ FEFE Wear on TikTok</h2>
+            <p>Join our community and share your FEFE style! #FEFEWear #SustainableFashion</p>
+            
+            <div class="tiktok-carousel">
+                <button class="carousel-button prev" aria-label="Previous video">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="tiktok-carousel-container" id="tiktokCarousel">
+                    <div class="tiktok-carousel-slide active">
+                        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@fefewear.com" data-unique-id="fefewear.com" data-embed-type="creator">
+                            <section>
+                                <a target="_blank" rel="noopener noreferrer" href="https://www.tiktok.com/@fefewear.com?refer=creator_embed">@fefewear.com</a>
+                            </section>
+                        </blockquote>
+                    </div>
+                    <div class="tiktok-carousel-slide">
+                        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@fefewear.com" data-embed-from="embed_page" data-embed-type="profile">
+                            <section>
+                                <a target="_blank" rel="noopener noreferrer" href="https://www.tiktok.com/@fefewear.com?refer=creator_embed" title="FEFE Wear">FEFE Wear Sustainable Fashion</a>
+                            </section>
+                        </blockquote>
+                    </div>
+                    <div class="tiktok-carousel-slide">
+                        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@fefewear.com/video/latest" data-video-id="latest">
+                            <section>
+                                <a target="_blank" rel="noopener noreferrer" title="Latest FEFE Wear Video" href="https://www.tiktok.com/@fefewear.com">Latest FEFE Updates</a>
+                            </section>
+                        </blockquote>
+                    </div>
+                    <div class="tiktok-carousel-slide">
+                        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@fefewear.com" data-unique-id="fefewear.com" data-embed-type="feed">
+                            <section>
+                                <a target="_blank" rel="noopener noreferrer" href="https://www.tiktok.com/@fefewear.com" title="FEFE Wear Feed">More from FEFE Wear</a>
+                            </section>
+                        </blockquote>
+                    </div>
+                </div>
+                <button class="carousel-button next" aria-label="Next video">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <div class="carousel-dots" id="carouselDots"></div>
+            </div>
+
+            <div class="social-share">
+                <a href="https://www.tiktok.com/@fefewear.com?lang=en-G" target="_blank" rel="noopener noreferrer" title="Follow us on TikTok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="#" class="share-tiktok" title="Share on TikTok">
+                    <i class="fas fa-share"></i>
+                </a>
+                <a href="#" class="copy-link" title="Copy Link">
+                    <i class="fas fa-link"></i>
+                </a>
+            </div>
+
+            <a href="https://www.tiktok.com/@fefewear.com?lang=en-G" target="_blank" rel="noopener noreferrer" class="tiktok-cta">
+                <i class="fab fa-tiktok"></i>
+                Follow us on TikTok
+            </a>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -504,6 +733,162 @@
                     }
                 });
             });
+        });
+
+        // TikTok Integration
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle Share button
+            const shareButtons = document.querySelectorAll('.share-tiktok');
+            shareButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const url = window.location.href;
+                    if (navigator.share) {
+                        navigator.share({
+                            title: 'Check out FEFE Wear!',
+                            text: 'Discover sustainable fashion at FEFE Wear! 🌿✨ #FEFEWear #SustainableFashion',
+                            url: url
+                        })
+                        .catch(console.error);
+                    } else {
+                        window.open(`https://www.tiktok.com/share?url=${encodeURIComponent(url)}`);
+                    }
+                });
+            });
+
+            // Handle Copy Link button
+            const copyButtons = document.querySelectorAll('.copy-link');
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const url = window.location.href;
+                    navigator.clipboard.writeText(url).then(() => {
+                        const originalText = button.innerHTML;
+                        button.innerHTML = '<i class="fas fa-check"></i>';
+                        setTimeout(() => {
+                            button.innerHTML = originalText;
+                        }, 2000);
+                    });
+                });
+            });
+
+            // Lazy load TikTok embeds
+            function loadTikTokEmbed() {
+                const embeds = document.querySelectorAll('.tiktok-embed');
+                embeds.forEach(embed => {
+                    if (!embed.hasAttribute('data-loaded')) {
+                        embed.setAttribute('data-loaded', 'true');
+                        if (typeof TikTok !== 'undefined') {
+                            TikTok.embed();
+                        }
+                    }
+                });
+            }
+
+            // Load TikTok embeds when they come into view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        loadTikTokEmbed();
+                    }
+                });
+            });
+
+            document.querySelectorAll('.tiktok-embed').forEach(embed => {
+                observer.observe(embed);
+            });
+
+            // Carousel functionality
+            const carousel = document.getElementById('tiktokCarousel');
+            const slides = carousel.querySelectorAll('.tiktok-carousel-slide');
+            const dotsContainer = document.getElementById('carouselDots');
+            const prevButton = document.querySelector('.carousel-button.prev');
+            const nextButton = document.querySelector('.carousel-button.next');
+            let currentSlide = 0;
+
+            // Create dots
+            slides.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.className = `carousel-dot ${index === 0 ? 'active' : ''}`;
+                dot.addEventListener('click', () => goToSlide(index));
+                dotsContainer.appendChild(dot);
+            });
+
+            // Update carousel display
+            function updateCarousel() {
+                const offset = -currentSlide * (340 + 32); // Slide width + gap
+                carousel.style.transform = `translateX(${offset}px)`;
+
+                // Update active states
+                slides.forEach((slide, index) => {
+                    slide.classList.toggle('active', index === currentSlide);
+                    dotsContainer.children[index].classList.toggle('active', index === currentSlide);
+                });
+
+                // Update button states
+                prevButton.style.opacity = currentSlide === 0 ? '0.5' : '1';
+                nextButton.style.opacity = currentSlide === slides.length - 1 ? '0.5' : '1';
+            }
+
+            // Navigation functions
+            function goToSlide(index) {
+                currentSlide = index;
+                updateCarousel();
+            }
+
+            function nextSlide() {
+                if (currentSlide < slides.length - 1) {
+                    currentSlide++;
+                    updateCarousel();
+                }
+            }
+
+            function prevSlide() {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateCarousel();
+                }
+            }
+
+            // Event listeners
+            nextButton.addEventListener('click', nextSlide);
+            prevButton.addEventListener('click', prevSlide);
+
+            // Touch swipe functionality
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            carousel.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, false);
+
+            carousel.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, false);
+
+            function handleSwipe() {
+                const swipeDistance = touchEndX - touchStartX;
+                if (Math.abs(swipeDistance) > 50) { // Minimum swipe distance
+                    if (swipeDistance > 0) {
+                        prevSlide();
+                    } else {
+                        nextSlide();
+                    }
+                }
+            }
+
+            // Auto-advance carousel every 5 seconds
+            let autoAdvance = setInterval(nextSlide, 5000);
+
+            // Pause auto-advance when interacting
+            carousel.addEventListener('mouseenter', () => clearInterval(autoAdvance));
+            carousel.addEventListener('mouseleave', () => {
+                autoAdvance = setInterval(nextSlide, 5000);
+            });
+
+            // Initial state
+            updateCarousel();
         });
     </script>
 </body>
