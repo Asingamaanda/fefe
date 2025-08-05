@@ -24,14 +24,43 @@
 
         .tiktok-carousel-slide {
             flex: 0 0 340px;
-            opacity: 0.7;
-            transform: scale(0.9);
-            transition: all 0.5s ease;
+            opacity: 0.6;
+            transform: scale(0.85);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
         }
 
         .tiktok-carousel-slide.active {
             opacity: 1;
-            transform: scale(1);
+            transform: scale(1.05);
+            z-index: 2;
+        }
+
+        .tiktok-carousel-slide:first-child {
+            position: relative;
+        }
+
+        .tiktok-carousel-slide:first-child::after {
+            content: '✨ Featured';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #ff0050 0%, #00f2ea 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.05); }
+            100% { transform: translateX(-50%) scale(1); }
         }
 
         .carousel-button {
@@ -586,30 +615,30 @@
                 </button>
                 <div class="tiktok-carousel-container" id="tiktokCarousel">
                     <div class="tiktok-carousel-slide active">
+                        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@fefewear.com/video/7510939065051729170" data-video-id="7510939065051729170">
+                            <section>
+                                <a target="_blank" rel="noopener noreferrer" href="https://www.tiktok.com/@fefewear.com/video/7510939065051729170">FEFE Wear Showcase</a>
+                            </section>
+                        </blockquote>
+                    </div>
+                    <div class="tiktok-carousel-slide">
                         <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@fefewear.com" data-unique-id="fefewear.com" data-embed-type="creator">
                             <section>
-                                <a target="_blank" rel="noopener noreferrer" href="https://www.tiktok.com/@fefewear.com?refer=creator_embed">@fefewear.com</a>
+                                <a target="_blank" rel="noopener noreferrer" href="https://www.tiktok.com/@fefewear.com?refer=creator_embed" title="FEFE Wear Profile">About FEFE Wear</a>
                             </section>
                         </blockquote>
                     </div>
                     <div class="tiktok-carousel-slide">
                         <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@fefewear.com" data-embed-from="embed_page" data-embed-type="profile">
                             <section>
-                                <a target="_blank" rel="noopener noreferrer" href="https://www.tiktok.com/@fefewear.com?refer=creator_embed" title="FEFE Wear">FEFE Wear Sustainable Fashion</a>
+                                <a target="_blank" rel="noopener noreferrer" href="https://www.tiktok.com/@fefewear.com?refer=creator_embed" title="Latest Updates">Latest from FEFE Wear</a>
                             </section>
                         </blockquote>
                     </div>
                     <div class="tiktok-carousel-slide">
-                        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@fefewear.com/video/latest" data-video-id="latest">
+                        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@fefewear.com" data-unique-id="fefewear.com" data-embed-type="feed" data-feed-type="hashtag" data-hashtag="fefewear">
                             <section>
-                                <a target="_blank" rel="noopener noreferrer" title="Latest FEFE Wear Video" href="https://www.tiktok.com/@fefewear.com">Latest FEFE Updates</a>
-                            </section>
-                        </blockquote>
-                    </div>
-                    <div class="tiktok-carousel-slide">
-                        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@fefewear.com" data-unique-id="fefewear.com" data-embed-type="feed">
-                            <section>
-                                <a target="_blank" rel="noopener noreferrer" href="https://www.tiktok.com/@fefewear.com" title="FEFE Wear Feed">More from FEFE Wear</a>
+                                <a target="_blank" rel="noopener noreferrer" href="https://www.tiktok.com/@fefewear.com" title="FEFE Community">#FEFEWear Community</a>
                             </section>
                         </blockquote>
                     </div>
