@@ -10,12 +10,20 @@ body {
     line-height: 1.6;
     color: #333;
     overflow-x: hidden;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 50%, #ff6a00 100%);
+    background-attachment: fixed;
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    background: rgba(255,255,255,0.85);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(42, 42, 114, 0.12);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
 }
 
 /* Typography */
@@ -56,9 +64,30 @@ p {
     font-size: 1rem;
 }
 
+
 .btn.primary {
-    background: linear-gradient(135deg, #8B7355 0%, #A0845C 100%);
+    background: linear-gradient(90deg, #ff6a00 0%, #43cea2 100%);
     color: white;
+    box-shadow: 0 4px 16px rgba(255, 106, 0, 0.15);
+}
+
+.btn.primary:hover {
+    background: linear-gradient(90deg, #43cea2 0%, #ff6a00 100%);
+    color: #fff;
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 10px 25px rgba(67, 206, 162, 0.2);
+}
+
+.btn.secondary {
+    background: transparent;
+    color: #ff6a00;
+    border: 2px solid #ff6a00;
+}
+
+.btn.secondary:hover {
+    background: #ff6a00;
+    color: white;
+    transform: translateY(-2px);
 }
 
 .btn.primary:hover {
@@ -80,7 +109,7 @@ p {
 
 /* Gradient Text */
 .gradient-text {
-    background: linear-gradient(135deg, #8B7355 0%, #A0845C 100%);
+    background: linear-gradient(90deg, #ff6a00 0%, #43cea2 50%, #185a9d 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -156,8 +185,10 @@ p {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    background: linear-gradient(135deg, #F5F0E8 0%, #E8DCC0 100%);
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
     padding-top: 80px;
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(255, 106, 0, 0.08);
 }
 
 .hero-container {
@@ -264,7 +295,9 @@ p {
 /* About Section */
 .about {
     padding: 5rem 0;
-    background: white;
+    background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(247, 151, 30, 0.08);
 }
 
 .about-content {
@@ -330,7 +363,9 @@ p {
 /* Companies Section */
 .companies {
     padding: 5rem 0;
-    background: #f8f9fa;
+    background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(24, 90, 157, 0.08);
 }
 
 .companies-grid {
@@ -413,7 +448,9 @@ p {
 /* Services Section */
 .services {
     padding: 5rem 0;
-    background: white;
+    background: linear-gradient(135deg, #ff6a00 0%, #ee0979 100%);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(238, 9, 121, 0.08);
 }
 
 .services-grid {
@@ -447,7 +484,9 @@ p {
 /* Contact Section */
 .contact {
     padding: 5rem 0;
-    background: #f8f9fa;
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(56, 249, 215, 0.08);
 }
 
 .contact-content {
@@ -525,9 +564,10 @@ p {
 
 /* Footer */
 .footer {
-    background: #1a1a1a;
+    background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
     color: white;
     padding: 3rem 0 1rem;
+    border-radius: 24px 24px 0 0;
 }
 
 .footer-content {

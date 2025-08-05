@@ -288,7 +288,7 @@ function createUploadComponent() {
       // Preview image
       const reader = new FileReader();
       reader.onload = (e) => {
-        avatarPreview.innerHTML = `<img src="${e.target.result}" style="width: 100%; height: 100%; object-fit: cover;">`;
+        avatarPreview.innerHTML = `<img src="${e.target.result}" alt="Profile picture preview" style="width: 100%; height: 100%; object-fit: cover;">`;
       };
       reader.readAsDataURL(file);
 

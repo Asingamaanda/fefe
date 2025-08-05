@@ -67,6 +67,43 @@ const userSchema = new mongoose.Schema({
       type: String,
       default: 'USD'
     }
+  },
+  // AI Learning and Conversational Tracking
+  aiLearning: {
+    totalConversations: {
+      type: Number,
+      default: 0
+    },
+    totalQuestions: {
+      type: Number,
+      default: 0
+    },
+    lastAIInteraction: Date,
+    preferredAIPersonality: {
+      type: String,
+      enum: ['friendly', 'professional', 'encouraging', 'casual'],
+      default: 'friendly'
+    },
+    conversationSessions: [{
+      sessionId: String,
+      startTime: Date,
+      lastActivity: Date,
+      messageCount: Number,
+      topics: [String]
+    }],
+    learningProgress: {
+      completedTopics: [String],
+      currentDifficulty: {
+        type: String,
+        enum: ['beginner', 'intermediate', 'advanced'],
+        default: 'beginner'
+      },
+      studyStreak: {
+        type: Number,
+        default: 0
+      },
+      lastStudyDate: Date
+    }
   }
 }, {
   timestamps: true

@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://fefe-holdings.com/sitemap.xml

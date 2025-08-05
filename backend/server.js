@@ -16,6 +16,9 @@ const enrollmentRoutes = require('./routes/enrollments');
 const paymentRoutes = require('./routes/payments');
 const userRoutes = require('./routes/users');
 const uploadRoutes = require('./routes/uploads');
+const aiLearningRoutes = require('./routes/ai-learning');
+const collaboratorRoutes = require('./routes/collaborators');
+const collaborationRoutes = require('./routes/collaborations');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -61,6 +64,7 @@ app.use('/api/enrollments', enrollmentRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/uploads', uploadRoutes);
+app.use('/api/ai-learning', aiLearningRoutes);
 
 // Serve uploaded files statically
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -94,7 +98,8 @@ app.get('/api', (req, res) => {
       enrollments: '/api/enrollments',
       payments: '/api/payments',
       users: '/api/users',
-      uploads: '/api/uploads'
+      uploads: '/api/uploads',
+      aiLearning: '/api/ai-learning'
     }
   });
 });

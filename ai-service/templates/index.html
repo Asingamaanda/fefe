@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FEFE AI Learning - CAPS Curriculum Assistant</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .container { 
+            max-width: 1200px; 
+            margin: 2rem auto; 
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .card h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+
+        #upload-section {
+            position: relative;
+        }
+
+        .upload-area {
+            border: 3px dashed #3498db;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: #2980b9;
+            background-color: #f8f9fa;
+        }
+
+        .upload-area.dragover {
+            border-color: #27ae60;
+            background-color: #d5f4e6;
+        }
+
+        input[type="file"] { 
+            display: none;
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: #3498db;
+            margin-bottom: 1rem;
+        }
+
+        button { 
+            padding: 12px 24px; 
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+
+        button:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        button:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .status {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .status.success {
+            background-color: #d5f4e6;
+            color: #27ae60;
+            border: 1px solid #27ae60;
+        }
+
+        .status.error {
+            background-color: #fadbd8;
+            color: #e74c3c;
+            border: 1px solid #e74c3c;
+        }
+
+        .status.info {
+            background-color: #d6eaf8;
+            color: #3498db;
+            border: 1px solid #3498db;
+        }
+
+        #chat-section {
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+        }
+
+        #chat-box { 
+            flex: 1;
+            border: 1px solid #e1e8ed; 
+            padding: 1rem; 
+            overflow-y: auto; 
+            margin-bottom: 1rem; 
+            background-color: #f8f9fa; 
+            border-radius: 10px;
+            scroll-behavior: smooth;
+        }
+
+        .message { 
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .user-message { 
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .ai-message { 
+            background: #ffffff;
+            color: #2c3e50;
+            border: 1px solid #e1e8ed;
+            margin-right: auto;
+        }
+
+        .ai-message.thinking {
+            background: #f39c12;
+            color: white;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .input-area {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        input[type="text"] { 
+            flex: 1;
+            padding: 12px 16px; 
+            border: 2px solid #e1e8ed; 
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: #3498db;
+        }
+
+        #send-button { 
+            width: auto;
+            margin: 0;
+            border-radius: 25px;
+            padding: 12px 20px;
+        }
+
+        .pdf-info {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #3498db;
+        }
+
+        .confidence-indicator {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .confidence-high {
+            background-color: #d5f4e6;
+            color: #27ae60;
+        }
+
+        .confidence-medium {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .confidence-low {
+            background-color: #fadbd8;
+            color: #e74c3c;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                margin: 1rem;
+                padding: 0;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎓 FEFE AI Learning</h1>
+        <p>CAPS Curriculum AI Assistant - Upload PDFs and ask intelligent questions</p>
+    </div>
+
+    <div class="container">
+        <div class="card" id="upload-section">
+            <h2>📚 Upload CAPS PDF</h2>
+            <div class="upload-area" onclick="document.getElementById('pdfFile').click()">
+                <div class="upload-icon">📄</div>
+                <p><strong>Click here or drag & drop</strong></p>
+                <p>Upload your CAPS curriculum PDF to begin learning</p>
+                <input type="file" id="pdfFile" accept=".pdf">
+            </div>
+            <button onclick="uploadPdf()">📤 Process PDF</button>
+            <button onclick="clearPdf()">🗑️ Clear PDF</button>
+            <div id="uploadStatus"></div>
+            <div id="pdfInfo"></div>
+        </div>
+
+        <div class="card" id="chat-section">
+            <h2>🤖 AI Tutor Chat</h2>
+            <div id="chat-box"></div>
+            <div class="input-area">
+                <input type="text" id="userQuestion" placeholder="Ask a question about the curriculum...">
+                <button id="send-button" onclick="askAi()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let uploadedPdfInfo = null;
+
+        // Drag and drop functionality
+        const uploadArea = document.querySelector('.upload-area');
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0 && files[0].type === 'application/pdf') {
+                document.getElementById('pdfFile').files = files;
+                uploadPdf();
+            }
+        });
+
+        async function uploadPdf() {
+            const fileInput = document.getElementById('pdfFile');
+            const uploadStatus = document.getElementById('uploadStatus');
+            const pdfInfo = document.getElementById('pdfInfo');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                setStatus("Please select a PDF file.", "error");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('pdf_file', file);
+
+            setStatus("🔄 Uploading and processing PDF...", "info");
+
+            try {
+                const response = await fetch('/upload_pdf', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    setStatus(`✅ ${data.message}`, "success");
+                    uploadedPdfInfo = data.metadata;
+                    displayPdfInfo(data.metadata, data.curriculum_analysis);
+                    
+                    // Add welcome message to chat with curriculum overview
+                    let welcomeMessage = `Great! I've processed "${data.metadata.filename}" with ${data.metadata.pages} pages and ${data.metadata.word_count} words.`;
+                    
+                    if (data.curriculum_analysis) {
+                        welcomeMessage += `\n\n📚 **Curriculum Analysis:**`;
+                        if (data.curriculum_analysis.grades_covered.length > 0) {
+                            welcomeMessage += `\n🎓 **Grades:** ${data.curriculum_analysis.grades_covered.join(', ')}`;
+                        }
+                        if (data.curriculum_analysis.subject_areas.length > 0) {
+                            welcomeMessage += `\n📖 **Subjects:** ${data.curriculum_analysis.subject_areas.join(', ')}`;
+                        }
+                        if (data.curriculum_analysis.key_concepts.length > 0) {
+                            welcomeMessage += `\n🔑 **Key Concepts:** ${data.curriculum_analysis.key_concepts.slice(0, 3).join(', ')}`;
+                        }
+                        welcomeMessage += `\n📋 **Sections Found:** ${data.curriculum_analysis.sections_found}`;
+                        
+                        welcomeMessage += `\n\n💡 **Try asking:**`;
+                        welcomeMessage += `\n• "Break down the learning objectives"`;
+                        welcomeMessage += `\n• "What concepts should students learn?"`;
+                        welcomeMessage += `\n• "Explain the assessment criteria"`;
+                        welcomeMessage += `\n• "Show me the weekly breakdown"`;
+                    }
+                    
+                    welcomeMessage += `\n\nI'm ready to provide detailed curriculum breakdowns and answer your questions!`;
+                    
+                    addMessage("ai", welcomeMessage);
+                } else {
+                    setStatus(`❌ ${data.message}`, "error");
+                }
+            } catch (error) {
+                console.error('Error uploading PDF:', error);
+                setStatus("❌ Error uploading PDF.", "error");
+            }
+        }
+
+        async function clearPdf() {
+            try {
+                const response = await fetch('/clear_pdf', {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    setStatus("🗑️ PDF cleared successfully", "info");
+                    document.getElementById('pdfInfo').innerHTML = '';
+                    document.getElementById('chat-box').innerHTML = '';
+                    uploadedPdfInfo = null;
+                }
+            } catch (error) {
+                console.error('Error clearing PDF:', error);
+            }
+        }
+
+        function setStatus(message, type) {
+            const uploadStatus = document.getElementById('uploadStatus');
+            uploadStatus.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
+        function displayPdfInfo(metadata, curriculumAnalysis = null) {
+            const pdfInfo = document.getElementById('pdfInfo');
+            let infoHTML = `
+                <div class="pdf-info">
+                    <h4>📋 Document Information</h4>
+                    <p><strong>File:</strong> ${metadata.filename}</p>
+                    <p><strong>Pages:</strong> ${metadata.pages}</p>
+                    <p><strong>Words:</strong> ${metadata.word_count.toLocaleString()}</p>
+                    <p><strong>Processing chunks:</strong> ${metadata.chunks}</p>
+            `;
+            
+            if (curriculumAnalysis) {
+                infoHTML += `
+                    <h4>🎓 Curriculum Analysis</h4>
+                    <p><strong>Grades:</strong> ${curriculumAnalysis.grades_covered.join(', ') || 'Not specified'}</p>
+                    <p><strong>Subjects:</strong> ${curriculumAnalysis.subject_areas.join(', ') || 'Not specified'}</p>
+                    <p><strong>Key Concepts:</strong> ${curriculumAnalysis.key_concepts.slice(0, 3).join(', ') || 'Processing...'}</p>
+                    <p><strong>Learning Outcomes:</strong> ${curriculumAnalysis.learning_outcomes.length} found</p>
+                    <p><strong>Sections:</strong> ${curriculumAnalysis.sections_found} identified</p>
+                `;
+            }
+            
+            infoHTML += `
+                    <button onclick="getCurriculumBreakdown()" style="margin-top: 1rem; background: linear-gradient(135deg, #27ae60, #2ecc71);">
+                        📚 Get Full Curriculum Breakdown
+                    </button>
+                </div>
+            `;
+            
+            pdfInfo.innerHTML = infoHTML;
+        }
+
+        async function askAi() {
+            const userQuestionInput = document.getElementById('userQuestion');
+            const question = userQuestionInput.value.trim();
+
+            if (!question) return;
+
+            // Display user's question
+            addMessage("user", question);
+            userQuestionInput.value = '';
+
+            // Show thinking indicator
+            const thinkingId = addMessage("ai", "🤔 Analyzing the curriculum content...", true);
+
+            try {
+                const response = await fetch('/ask_ai', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        question: question,
+                        user_id: 'demo_user' // In real app, get from authentication
+                    })
+                });
+                const data = await response.json();
+
+                // Remove thinking indicator
+                document.getElementById(thinkingId).remove();
+
+                // Display AI's answer with confidence indicator
+                let aiResponse = data.answer;
+                if (data.confidence) {
+                    const confidenceClass = getConfidenceClass(data.confidence);
+                    aiResponse += `<span class="confidence-indicator ${confidenceClass}">Confidence: ${Math.round(data.confidence * 100)}%</span>`;
+                }
+
+                addMessage("ai", aiResponse);
+
+            } catch (error) {
+                console.error('Error asking AI:', error);
+                document.getElementById(thinkingId).remove();
+                addMessage("ai", "❌ Sorry, something went wrong. Please try again.");
+            }
+        }
+
+        function addMessage(sender, message, isThinking = false) {
+            const chatBox = document.getElementById('chat-box');
+            const messageDiv = document.createElement('div');
+            const messageId = 'msg-' + Date.now();
+            messageDiv.id = messageId;
+            messageDiv.classList.add('message', `${sender}-message`);
+            
+            if (isThinking) {
+                messageDiv.classList.add('thinking');
+            }
+            
+            const prefix = sender === 'user' ? '👤 You: ' : '🤖 AI: ';
+            messageDiv.innerHTML = prefix + message;
+            
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            
+            return messageId;
+        }
+
+        async function getCurriculumBreakdown() {
+            try {
+                const response = await fetch('/get_curriculum_breakdown');
+                const data = await response.json();
+                
+                if (data.error) {
+                    addMessage("ai", `❌ ${data.error}`);
+                    return;
+                }
+                
+                // Format the comprehensive breakdown
+                let breakdownMessage = `📚 **COMPREHENSIVE CAPS CURRICULUM BREAKDOWN**\n\n`;
+                
+                // Summary
+                if (data.summary) {
+                    breakdownMessage += `🎯 **Overview:**\n`;
+                    breakdownMessage += `• **Grades:** ${data.summary.grades_covered.join(', ') || 'Not specified'}\n`;
+                    breakdownMessage += `• **Subjects:** ${data.summary.subject_areas.join(', ') || 'Not specified'}\n`;
+                    breakdownMessage += `• **Total Concepts:** ${data.summary.concepts_count}\n`;
+                    breakdownMessage += `• **Learning Outcomes:** ${data.summary.learning_outcomes_count}\n`;
+                    breakdownMessage += `• **Sections:** ${data.summary.total_sections}\n\n`;
+                }
+                
+                // Key Concepts
+                if (data.curriculum_breakdown.key_concepts.length > 0) {
+                    breakdownMessage += `🔑 **Key Concepts to Master:**\n`;
+                    data.curriculum_breakdown.key_concepts.slice(0, 8).forEach(concept => {
+                        breakdownMessage += `• ${concept}\n`;
+                    });
+                    breakdownMessage += `\n`;
+                }
+                
+                // Learning Path
+                if (data.curriculum_breakdown.learning_path.length > 0) {
+                    breakdownMessage += `📖 **Learning Outcomes:**\n`;
+                    data.curriculum_breakdown.learning_path.slice(0, 5).forEach(outcome => {
+                        breakdownMessage += `→ ${outcome}\n`;
+                    });
+                    breakdownMessage += `\n`;
+                }
+                
+                // Assessment
+                if (data.curriculum_breakdown.assessment_criteria.length > 0) {
+                    breakdownMessage += `📊 **Assessment Focus:**\n`;
+                    data.curriculum_breakdown.assessment_criteria.slice(0, 5).forEach(criteria => {
+                        breakdownMessage += `✓ ${criteria}\n`;
+                    });
+                    breakdownMessage += `\n`;
+                }
+                
+                // Time Sequence
+                if (data.curriculum_breakdown.recommended_sequence.length > 0) {
+                    breakdownMessage += `⏰ **Learning Sequence:**\n`;
+                    data.curriculum_breakdown.recommended_sequence.slice(0, 6).forEach(seq => {
+                        breakdownMessage += `📅 ${seq}\n`;
+                    });
+                    breakdownMessage += `\n`;
+                }
+                
+                // Mathematical Concepts (if present)
+                if (data.detailed_analysis.mathematical_concepts.length > 0) {
+                    breakdownMessage += `🔢 **Mathematical Concepts:**\n`;
+                    data.detailed_analysis.mathematical_concepts.slice(0, 8).forEach(concept => {
+                        breakdownMessage += `• ${concept}\n`;
+                    });
+                    breakdownMessage += `\n`;
+                }
+                
+                // Skills and Activities
+                if (data.detailed_analysis.skills.length > 0) {
+                    breakdownMessage += `🛠️ **Skills Development:**\n`;
+                    data.detailed_analysis.skills.slice(0, 5).forEach(skill => {
+                        breakdownMessage += `• ${skill}\n`;
+                    });
+                    breakdownMessage += `\n`;
+                }
+                
+                if (data.detailed_analysis.activities.length > 0) {
+                    breakdownMessage += `🎯 **Recommended Activities:**\n`;
+                    data.detailed_analysis.activities.slice(0, 5).forEach(activity => {
+                        breakdownMessage += `• ${activity}\n`;
+                    });
+                    breakdownMessage += `\n`;
+                }
+                
+                // Resources
+                if (data.detailed_analysis.resources.length > 0) {
+                    breakdownMessage += `📚 **Resources Needed:**\n`;
+                    data.detailed_analysis.resources.slice(0, 5).forEach(resource => {
+                        breakdownMessage += `• ${resource}\n`;
+                    });
+                    breakdownMessage += `\n`;
+                }
+                
+                breakdownMessage += `💡 **Next Steps:** Ask me specific questions about any of these areas for detailed explanations!`;
+                
+                addMessage("ai", breakdownMessage);
+                
+            } catch (error) {
+                console.error('Error getting curriculum breakdown:', error);
+                addMessage("ai", "❌ Sorry, I couldn't retrieve the curriculum breakdown. Please try again.");
+            }
+        }
+
+        function getConfidenceClass(confidence) {
+            if (confidence >= 0.7) return 'confidence-high';
+            if (confidence >= 0.4) return 'confidence-medium';
+            return 'confidence-low';
+        }
+
+        // Allow pressing Enter to send message
+        document.getElementById('userQuestion').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                askAi();
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            addMessage("ai", "👋 Welcome to FEFE AI Learning! Upload a CAPS curriculum PDF to get started with intelligent tutoring assistance.");
+        });
+    </script>
+</body>
+</html>

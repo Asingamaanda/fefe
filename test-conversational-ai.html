@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FEFE Conversational AI | Human-Like AI Tutoring Demo</title>
+    <meta name="description" content="Test FEFE's Conversational AI: a human-like, friendly, and context-aware AI tutor for learning, collaboration, and creative exploration.">
+    <meta name="keywords" content="FEFE, conversational AI, AI tutor, digital learning, human-like AI, education, collaboration, demo, Africa, global learning, talent hub">
+    <meta name="author" content="FEFE Holdings">
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="FEFE Conversational AI | Human-Like AI Tutoring Demo">
+    <meta property="og:description" content="Test FEFE's Conversational AI: a human-like, friendly, and context-aware AI tutor for learning, collaboration, and creative exploration.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fefe.africa/test-conversational-ai.html">
+    <meta property="og:image" content="/assets/fefe-convo-og-image.png">
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="FEFE Conversational AI | Human-Like AI Tutoring Demo">
+    <meta name="twitter:description" content="Test FEFE's Conversational AI: a human-like, friendly, and context-aware AI tutor for learning, collaboration, and creative exploration.">
+    <meta name="twitter:image" content="/assets/fefe-convo-og-image.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .chat-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            height: 700px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .chat-header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message.ai {
+            justify-content: flex-start;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.6;
+            white-space: pre-wrap; /* Preserve formatting */
+            word-wrap: break-word;
+        }
+
+        .message.user .message-content {
+            background: #007bff;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.ai .message-content {
+            background: white;
+            color: #333;
+            border: 1px solid #e0e0e0;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message-info {
+            font-size: 10px;
+            opacity: 0.6;
+            margin-top: 5px;
+        }
+
+        .chat-input-container {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .chat-input-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .chat-input:focus {
+            border-color: #007bff;
+        }
+
+        .send-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .send-button:hover {
+            background: #0056b3;
+        }
+
+        .send-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 12px 16px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 18px;
+            margin-bottom: 15px;
+            max-width: 70%;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #999;
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        .status-bar {
+            padding: 10px 20px;
+            background: #f1f3f4;
+            border-top: 1px solid #e0e0e0;
+            font-size: 12px;
+            color: #666;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4CAF50;
+        }
+
+        .conversation-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .control-button {
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 15px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .control-button:hover {
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>🤖 FEFE Conversational AI Tutor</h1>
+            <p>Your friendly AI learning companion - Now with human-like conversations!</p>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <!-- Messages will be added here -->
+        </div>
+
+        <div class="typing-indicator" id="typingIndicator">
+            <div class="typing-dots">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            </div>
+        </div>
+
+        <div class="status-bar">
+            <div class="status-indicator">
+                <div class="status-dot"></div>
+                <span id="aiStatus">AI Ready - Conversational Mode Active</span>
+            </div>
+            <div class="conversation-controls">
+                <button class="control-button" onclick="startNewConversation()">New Chat</button>
+                <button class="control-button" onclick="clearConversation()">Clear</button>
+            </div>
+        </div>
+
+        <div class="chat-input-container">
+            <div class="chat-input-row">
+                <input 
+                    type="text" 
+                    class="chat-input" 
+                    id="messageInput" 
+                    placeholder="Ask me anything... I'm here to help you learn!"
+                    onkeypress="handleKeyPress(event)"
+                >
+                <button class="send-button" onclick="sendMessage()" id="sendButton">
+                    →
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let sessionId = null;
+        let conversationHistory = [];
+        const AI_SERVICE_URL = 'http://localhost:5001';
+
+        // Initialize conversation when page loads
+        window.onload = function() {
+            startNewConversation();
+        };
+
+        async function startNewConversation() {
+            try {
+                const response = await fetch(`${AI_SERVICE_URL}/start_conversation`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        user_id: 'test_user_' + Date.now()
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    sessionId = data.session_id;
+                    
+                    // Clear chat and add greeting
+                    document.getElementById('chatMessages').innerHTML = '';
+                    addMessage('ai', data.greeting, {
+                        ai_service: 'Conversational AI',
+                        confidence: 1.0,
+                        response_type: 'greeting'
+                    });
+                    
+                    updateStatus('New conversation started!');
+                } else {
+                    updateStatus('Failed to start conversation');
+                }
+            } catch (error) {
+                console.error('Error starting conversation:', error);
+                updateStatus('Connection error');
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            // Add user message to chat
+            addMessage('user', message);
+            input.value = '';
+            
+            // Show typing indicator
+            showTypingIndicator();
+            
+            // Disable send button
+            document.getElementById('sendButton').disabled = true;
+
+            try {
+                const response = await fetch(`${AI_SERVICE_URL}/ask_ai`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        question: message,
+                        user_id: 'test_user',
+                        session_id: sessionId
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    // Add AI response to chat
+                    addMessage('ai', data.answer, {
+                        ai_service: data.ai_service,
+                        confidence: data.confidence,
+                        response_type: data.response_type,
+                        conversation_length: data.conversation_length
+                    });
+                    
+                    updateStatus(`AI responded using ${data.ai_service}`);
+                } else {
+                    addMessage('ai', 'Sorry, I encountered an error. Please try again!', {
+                        ai_service: 'Error Handler',
+                        confidence: 0,
+                        response_type: 'error'
+                    });
+                    updateStatus('Response error');
+                }
+            } catch (error) {
+                console.error('Error sending message:', error);
+                addMessage('ai', 'I\'m having trouble connecting right now. Please check if the AI service is running!', {
+                    ai_service: 'Error Handler',
+                    confidence: 0,
+                    response_type: 'connection_error'
+                });
+                updateStatus('Connection failed');
+            } finally {
+                hideTypingIndicator();
+                document.getElementById('sendButton').disabled = false;
+            }
+        }
+
+        function addMessage(sender, content, metadata = {}) {
+            const messagesContainer = document.getElementById('chatMessages');
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            const messageContent = document.createElement('div');
+            messageContent.className = 'message-content';
+            
+            // Handle formatted content properly
+            if (sender === 'ai') {
+                // Format AI responses with proper structure
+                const formattedContent = formatAIResponse(content);
+                messageContent.innerHTML = formattedContent;
+            } else {
+                messageContent.textContent = content;
+            }
+            
+            messageDiv.appendChild(messageContent);
+            
+            // Add metadata for AI messages
+            if (sender === 'ai' && metadata.ai_service) {
+                const messageInfo = document.createElement('div');
+                messageInfo.className = 'message-info';
+                messageInfo.innerHTML = `
+                    ${metadata.ai_service} • 
+                    Confidence: ${Math.round((metadata.confidence || 0) * 100)}% • 
+                    Type: ${metadata.response_type || 'standard'}
+                    ${metadata.conversation_length ? ` • Chat #${metadata.conversation_length}` : ''}
+                `;
+                messageDiv.appendChild(messageInfo);
+            }
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function formatAIResponse(content) {
+            // Convert plain text formatting to HTML
+            let formatted = content
+                // Convert double newlines to paragraph breaks
+                .split('\n\n')
+                .map(paragraph => {
+                    if (paragraph.trim()) {
+                        // Handle special formatting
+                        paragraph = paragraph
+                            // Bold text
+                            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                            // Emoji bullets
+                            .replace(/^💡\s/, '<span style="color: #ff9500;">💡 </span>')
+                            // Numbered items with indentation
+                            .replace(/^   (\d+\..*)/gm, '<div style="margin-left: 20px;">$1</div>')
+                            // Convert single newlines to line breaks within paragraphs
+                            .replace(/\n/g, '<br>');
+                        
+                        return `<p>${paragraph}</p>`;
+                    }
+                    return '';
+                })
+                .join('');
+            
+            return formatted || content;
+        }
+
+        function showTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'block';
+        }
+
+        function hideTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'none';
+        }
+
+        function updateStatus(message) {
+            document.getElementById('aiStatus').textContent = message;
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        async function clearConversation() {
+            if (!sessionId) return;
+            
+            try {
+                await fetch(`${AI_SERVICE_URL}/clear_conversation/${sessionId}`, {
+                    method: 'POST'
+                });
+                
+                document.getElementById('chatMessages').innerHTML = '';
+                updateStatus('Conversation cleared');
+            } catch (error) {
+                console.error('Error clearing conversation:', error);
+            }
+        }
+
+        // Test different conversation types
+        function testConversation() {
+            const testQuestions = [
+                "Hello! How are you today?",
+                "What can you help me with?",
+                "Can you explain photosynthesis in simple terms?",
+                "I'm struggling with math. Can you encourage me?",
+                "How do you make learning fun?"
+            ];
+            
+            let index = 0;
+            const interval = setInterval(() => {
+                if (index < testQuestions.length) {
+                    document.getElementById('messageInput').value = testQuestions[index];
+                    sendMessage();
+                    index++;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
